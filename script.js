@@ -5,6 +5,8 @@ const signs = ['+', '-', '*', '/']
 let A = ['']
 let B = ['']
 let C = []
+let E = ['']
+// let G = []
 let d
 let value
 document.onkeypress = function(event){
@@ -14,7 +16,7 @@ document.onkeypress = function(event){
     if(numbers.includes(d) & C.length==0){
         A[0]=A[0]+d
     }
-    else if(numbers.includes(d) & C.length>0){
+    else if(numbers.includes(d) & C.length==1){
         B[0]=B[0]+d
     }
     else if(signs.includes(d) & C.length==0){
@@ -52,22 +54,107 @@ document.onkeypress = function(event){
         B = ['']
         C = ['-']
     }
-    else if(d=='Enter' & C[0]=='+'){
+    else if(d=='Enter' & C[0]=='+' & C.length==1){
         plusFunction()
         console.log('Value - ', value)
         document.querySelector('.input').value=value
         A[0] = value
         B = ['']
-        C = ['']
+        C = []
     }
-    else if(d=='Enter' & C[0]=='-'){
+    else if(d=='Enter' & C[0]=='-' & C.length==1){
         minusFunction()
         console.log('Value - ', value)
         document.querySelector('.input').value=value
         A[0] = value
         B = ['']
-        C = ['']
+        C = []
     }
+    else if(d=='Enter' & C[0]=='*'){
+        multiplyFunction()
+        console.log('Value - ', value)
+        document.querySelector('.input').value=value
+        A[0] = value
+        B = ['']
+        C = []
+    }
+    else if(d=='Enter' & C[0]=='/'){
+        divideFunction()
+        console.log('Value - ', value)
+        document.querySelector('.input').value=value
+        A[0] = value
+        B = ['']
+        C = []
+    }
+    else if(d=='*' & C.length>0 & C[0]=='*'){
+        multiplyFunction()
+        console.log('Value - ', value)
+        document.querySelector('.input').value=value
+        A[0] = value
+        B = ['']
+        C = ['*']
+    }
+    else if(d=='*' & C.length>0 & C[0]=='/'){
+        divideFunction()
+        console.log('Value - ', value)
+        document.querySelector('.input').value=value
+        A[0] = value
+        B = ['']
+        C = ['*']
+    }
+    else if(d=='/' & C.length>0 & C[0]=='*'){
+        multiplyFunction()
+        console.log('Value - ', value)
+        document.querySelector('.input').value=value
+        A[0] = value
+        B = ['']
+        C = ['/']
+    }
+    else if(d=='/' & C.length>0 & C[0]=='/'){
+        divideFunction()
+        console.log('Value - ', value)
+        document.querySelector('.input').value=value
+        A[0] = value
+        B = ['']
+        C = ['/']
+    }
+    else if(d=='*' & C.length>0 & C[0]=='+'){
+        C.push('*')
+    }
+    else if(d=='*' & C.length>0 & C[0]=='-'){
+        C.push('*')
+    }
+    else if(d=='/' & C.length>0 & C[0]=='+'){
+        C.push('/')
+    }
+    else if(d=='/' & C.length>0 & C[0]=='-'){
+        C.push('/')
+    }
+    else if(C.length==2 & E[0].length==0){
+        E[0]=E[0]+d
+        console.log('E ', E)
+    }
+    else if(d=='Enter' & C[1]=='*' & C[0]=='+' & E[0].length>0){
+        value = Number(E[0]) * Number(B[0]) + Number(A[0])
+        document.querySelector('.input').value=value
+        A[0] = value
+        B = ['']
+        C = []
+        E=['']
+    }
+    else if(d=='Enter' & C[1]=='*' & C[0]=='-' & E[0].length>0){
+        value = Number(A[0]) - (Number(E[0]) * Number(B[0])) 
+        document.querySelector('.input').value=value
+        A[0] = value
+        B = ['']
+        C = []
+        E=['']
+    }
+    // else if(numbers.includes(d) & C.length>2 & C[0]=='+' & C[1]=='*'){
+    //     E.push(d)
+    //     console.log('E -- ', E)
+    // }
+    // else if(C.length==2 & E.length)
     // else if(d=='*' & C.length>0){
     //     multiplyFunction()
     //     console.log('Value - ', value)
@@ -87,6 +174,7 @@ document.onkeypress = function(event){
     console.log(A)
     console.log(B)
     console.log(C)
+    console.log(E)
 }
 function plusFunction(){
     value=Number(A[0])+Number(B[0])
